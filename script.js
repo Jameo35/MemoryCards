@@ -42,9 +42,7 @@ addCardBtn.addEventListener('click', () => {
 });
 
 function createCard(data, index) {
-	
   const card = document.createElement('div');
-  
   card.classList.add('card');
 
   if (index === 0) {
@@ -77,7 +75,6 @@ function createCard(data, index) {
 }
 
 const cardsEl = [];
-
 function updateCurrentText() {
   currentEl.innerText = `${currentActiveCard + 1}/${cardsEl.length}`;
 }
@@ -99,3 +96,51 @@ function getCardsData() {
 const cardsData = getCardsData();
 
 createCards()
+
+// #####################
+// Navigate cards
+// #####################
+
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+
+nextBtn.addEventListener('click', () => {
+  cardsEl[currentActiveCard].className = 'card left';
+
+  currentActiveCard = currentActiveCard + 1;
+
+  if (currentActiveCard > cardsEl.length - 1) {
+    currentActiveCard = cardsEl.length - 1;
+  }
+
+  cardsEl[currentActiveCard].className = 'card active';
+
+  updateCurrentText();
+});
+
+prevBtn.addEventListener('click', () => {
+  cardsEl[currentActiveCard].className = 'card right';
+
+  currentActiveCard = currentActiveCard - 1;
+
+  if (currentActiveCard < 0) {
+    currentActiveCard = 0;
+  }
+
+  cardsEl[currentActiveCard].className = 'card active';
+
+  updateCurrentText();
+});
+
+// #####################
+// Clear cards
+// #####################
+
+const clearBtn = document.getElementById('clear');
+
+// Clear cards button
+clearBtn.addEventListener('click', () => {
+  localStorage.clear();
+  cardsContainer.innerHTML = '';
+  window.location.reload();
+});
